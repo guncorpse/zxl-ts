@@ -22,24 +22,6 @@
                   <h6 class="text-uppercase ls-1 mb-1">你自己收藏的喜欢书籍</h6>
                   <#if userInfo??><h2 class="mb-0">${userInfo.name}的收藏夹</h2></#if>
                 </div>
-                <!--
-                <div class="col">
-                  <ul class="nav nav-pills justify-content-end">
-                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
-                      <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
-                        <span class="d-none d-md-block">Month</span>
-                        <span class="d-md-none">M</span>
-                      </a>
-                    </li>
-                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}' data-prefix="$" data-suffix="k">
-                      <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
-                        <span class="d-none d-md-block">Week</span>
-                        <span class="d-md-none">W</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                -->
               </div>
             </div>
             <div class="card-body">
@@ -55,15 +37,14 @@
            	  	<#else>
 	           	  	<#list favorites as book>
 		           	    <div class="col-xl-2 mb-3">
-			           	    <a href="${book.alt}" target="_blank">
-				              <div class="card shadow" style="width: 100%;">
-							    <img class="card-img-top" style="height:230px;" src="${book.image}" alt="Card image cap">
-								<div class="card-body">
-								  <h5 class="card-title" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap">${book.title}</h5>
-								  <p class="card-text" style="font-size:12px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap">${book.author}</p>
-								</div>
-							  </div>
-							</a>
+			              <div class="card shadow" style="width: 100%;">
+						    <a href="${book.bookAlt}" target="_blank"><img class="card-img-top" src="${book.bookImage}" alt="Card image cap"></a>
+							<div class="card-body">
+							  <a href="${book.bookAlt}" target="_blank"><h5 class="card-title" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap">${book.bookTitle}</h5></a>
+							  <p class="card-text" style="font-size:12px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap">${book.bookAuthor}</p>
+							</div>
+							<button data-toggle="modal" data-target="#deleteModal" data-delete-url="${assets_path}/favorite/delete.htm?id=${book.id}" class="btn btn-warning btn-sm btn-block" style="border-radius:0px">删除此收藏</button>
+						  </div>
 			            </div>
 		            </#list>
 		         </#if>

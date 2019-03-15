@@ -5,6 +5,8 @@ public class Favorite {
 	private String id;
 	private String userId;
 	private String bookId;
+	private String bookAlt;
+	private String bookAuthor;
 	private String userName;
 	private String bookTitle;
 	private String bookImage;
@@ -53,6 +55,19 @@ public class Favorite {
 		this.scTimestamp = scTimestamp;
 	}
 	
+	
+	public String getBookAlt() {
+		return bookAlt;
+	}
+	public void setBookAlt(String bookAlt) {
+		this.bookAlt = bookAlt;
+	}
+	public String getBookAuthor() {
+		return bookAuthor;
+	}
+	public void setBookAuthor(String bookAuthor) {
+		this.bookAuthor = bookAuthor;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

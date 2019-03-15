@@ -16,7 +16,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import zxl.dao.IBookDao;
+import zxl.dao.IFavoriteDao;
 import zxl.modals.Book;
+import zxl.modals.Favorite;
+import zxl.modals.User;
 import zxl.service.IBookService;
 import zxl.tools.RequestUtils;
 
@@ -25,6 +28,9 @@ public class BookServiceImpl implements IBookService {
 	
 	@Autowired
 	private IBookDao bookDao;
+	
+	@Autowired
+	private IFavoriteDao favoriteDao;
 
 	@Override
 	public Book save(Book book) throws Exception {
@@ -143,11 +149,27 @@ public class BookServiceImpl implements IBookService {
 	}
 
 	@Override
-	public Map<String, Object> getPage(Integer start, Integer count, Book book) throws Exception {
+	public Map<String, Object> getPage(Integer start, Integer count, Book book, User user) throws Exception {
 		Collection<Book> books = bookDao.getPage(start, count, book);
-		Integer size = bookDao.get(book).size();
+		Collection<Book> bs = new ArrayList<>();
 		Map<String, Object> result = new HashMap<>();
 		result.put("books", books);
+		if (user != null) {
+			Favorite search = new Favorite();
+			search.setUserId(user.getId());
+			Collection<Favorite> favorites = favoriteDao.get(search);
+			for (Book b: books) {
+				b.setIsFavorite(false);
+				for (Favorite f: favorites) {
+					if (b.getId().equals(f.getBookId())) {
+						b.setIsFavorite(true);
+					}
+				}
+				bs.add(b);
+			}
+			result.put("books", bs);
+		}
+		Integer size = bookDao.get(book).size();
 		result.put("total", size);
 		return result;
 	}

@@ -55,6 +55,8 @@ create table zxl_ts_favorite(
     USER_NAME                     varchar(32)         character set utf8 collate utf8_bin    not null comment '用户名称',
     BOOK_ID                       char(36)            character set utf8 collate utf8_bin    not null comment '书籍编号',    
     BOOK_NAME                     varchar(32)         character set utf8 collate utf8_bin    not null comment '书籍名称',
+    BOOK_ALT                      varchar(64)         character set utf8 collate utf8_bin    not null comment '书籍链接',
+    BOOK_AUTHOR                   varchar(128)        character set utf8 collate utf8_bin    not null comment '书籍作者',
     BOOK_IMAGE                    varchar(255)        character set utf8 collate utf8_bin    not null comment '书籍封面',
     SC_TIMESTAMP                  BIGINT                                                     not null comment '收藏时间',        
     primary key(ID)

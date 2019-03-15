@@ -45,7 +45,8 @@ public class BookController extends BaseController {
 			Integer total = 0;
 			page.addObject("total", total);
 			page.addObject("books", Collections.emptyList());
-			Map<String, Object> result = bookService.getPage(start, count, book);
+			User user = (User)this.getSession().getAttribute("userInfo");
+			Map<String, Object> result = bookService.getPage(start, count, book, user);
 			if (result.get("total") != null) {
 				total = (Integer)result.get("total");
 			}
@@ -55,6 +56,7 @@ public class BookController extends BaseController {
 			//page.addObject("userSize", userService.get(new User()).size());
 		} catch (Exception e) {
 			page.addObject("errorMessage", e.getMessage());
+			page.addObject("users", Collections.emptyList());
 		}
 		return page;
 	}
@@ -97,6 +99,7 @@ public class BookController extends BaseController {
 			page = this.get(null, null, new Book());
 		} catch (Exception e) {
 			e.printStackTrace();
+			page = this.get(null, null, new Book());
 			page.addObject("errorMessage", e.getMessage());
 		}
 		return page;
@@ -110,6 +113,54 @@ public class BookController extends BaseController {
 			favorite.setUserId(id);
 			Collection<Favorite> favorites = favoriteService.get(favorite);
 			page.addObject("favorites", favorites);
+		} catch (Exception e) {
+			e.printStackTrace();
+			page.addObject("errorMessage", e.getMessage());
+		}
+		return page;
+	}
+	
+	@RequestMapping(value = "addfavorite/{id}", method = RequestMethod.GET)
+	public ModelAndView addfavorite(Integer pagen, Integer count, @PathVariable String id) {
+		ModelAndView page = null;
+		try {
+			User user = (User)this.getSession().getAttribute("userInfo");
+			if (user == null) {
+				throw new Exception("未查询到登录信息，请登录");
+			}
+			Favorite favorite = new Favorite();
+			Book book = this.bookService.get(id);
+			favorite.setBookId(book.getId());
+			favorite.setUserId(user.getId());
+			Collection<Favorite> exists = this.favoriteService.get(favorite);
+			if (!exists.isEmpty()) {
+				throw new Exception("此书已经收藏");
+			}
+			favorite.setBookAlt(book.getAlt());
+			favorite.setBookAuthor(book.getAuthor());
+			favorite.setBookImage(book.getImage());
+			favorite.setBookTitle(book.getTitle());
+			favorite.setUserName(user.getName());
+			favorite = this.favoriteService.save(favorite);
+			page = get(pagen, count, new Book());
+		} catch (Exception e) {
+			e.printStackTrace();
+			page = get(pagen, count, new Book());
+			page.addObject("errorMessage", e.getMessage());
+		}
+		return page;
+	}
+	
+	@RequestMapping(value = "favorite/delete", method = RequestMethod.GET)
+	public ModelAndView deletefavorite(Favorite favorite) {
+		ModelAndView page = null;
+		try {
+			this.favoriteService.delete(favorite);
+			User user = (User)this.getSession().getAttribute("userInfo");
+			if (user == null) {
+				throw new Exception("未查询到登录信息，请登录");
+			}
+			page = favorite(user.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			page.addObject("errorMessage", e.getMessage());

@@ -35,13 +35,14 @@
            	    <#list books as book>
 	           	    <div class="col-xl-2 mb-3">
 			              <div class="card shadow" style="width: 100%;">
-						    <a href="${book.alt}" target="_blank"><img class="card-img-top" style="height:230px;" src="${book.image}" alt="Card image cap"></a>
+						    <a href="${book.alt}" target="_blank"><img class="card-img-top" src="${book.image}" alt="Card image cap"></a>
 							<div class="card-body">
 							  <a href="${book.alt}" target="_blank"><h5 class="card-title" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap">${book.title}</h5></a>
 							  <p class="card-text" style="font-size:12px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap">${book.author}</p>
 							</div>
 							<#if userInfo??>
-								<button class="btn btn-success btn-sm btn-block" style="border-radius:0px">收 藏</button>
+								<#if !book.isFavorite><button class="btn btn-success btn-sm btn-block" style="border-radius:0px" onclick="window.location.href='${assets_path}/addfavorite/${book.id}.htm?pagen=${pagen}'">收 藏</button></#if>
+								<#if book.isFavorite><button class="btn btn-success btn-sm btn-block" style="border-radius:0px" disabled>已收藏</button></#if>
 							</#if>
 							<#if (userInfo??&&userInfo.isAdmin == 'y')><button data-toggle="modal" data-target="#deleteModal" data-delete-url="${assets_path}/book/delete.htm?id=${book.id}" class="btn btn-warning btn-sm btn-block" style="border-radius:0px">删除此记录</button></#if>
 						  </div>

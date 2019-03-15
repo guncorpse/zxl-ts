@@ -25,6 +25,7 @@ public class Book {
 	private String binding;
 	private String tags;
 	private Long createTimestamp;
+	private Boolean isFavorite;
 	
 	public String getId() {
 		return id;
@@ -163,6 +164,12 @@ public class Book {
 	}
 	public void setCreateTimestamp(Long createTimestamp) {
 		this.createTimestamp = createTimestamp;
+	}
+	public Boolean getIsFavorite() {
+		return isFavorite;
+	}
+	public void setIsFavorite(Boolean isFavorite) {
+		this.isFavorite = isFavorite;
 	}
 	@Override
 	public int hashCode() {

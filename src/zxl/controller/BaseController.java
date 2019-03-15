@@ -10,7 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class BaseController {
 	
-	private String assetsPath = "http://localhost:8080/zxl-ts";
+	private String assetsPath = "http://47.93.42.103:8080/zxl-ts";
+	//private String assetsPath = "http://localhost:8080/zxl-ts";
 	
 	@Autowired
 	private HttpServletRequest request;

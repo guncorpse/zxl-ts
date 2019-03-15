@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import zxl.modals.Book;
+import zxl.modals.User;
 
 public interface IBookService {
 	
@@ -17,7 +18,7 @@ public interface IBookService {
 	
 	public Book get(String id) throws Exception;
 	
-	public Map<String, Object> getPage(Integer start, Integer count, Book book) throws Exception;
+	public Map<String, Object> getPage(Integer start, Integer count, Book book, User user) throws Exception;
 	
 	public Map<String, Object> search(String keyword, Integer start, Integer count) throws Exception;
 

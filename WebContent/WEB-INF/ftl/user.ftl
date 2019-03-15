@@ -56,7 +56,7 @@
 		           	    <!-- Table -->
 					      <div class="row" style="width:100%;margin:0px">
 					        <div class="col">
-					          <button class="btn btn-success">新增</button>
+					          <!--<button class="btn btn-success">新增</button>-->
 					          <div class="card shadow" >
 					            <div class="table-responsive" >
 					              <table class="table align-items-center table-flush" >
@@ -80,7 +80,7 @@
 					                    </th>
 					                    <td>
 					                      <span class="badge badge-dot mr-4">
-					                        <i class="bg-warning"></i> ${user.account}
+					                        ${user.account}
 					                      </span>
 					                    </td>
 					                    <td>
@@ -90,8 +90,8 @@
 					                      </span>
 					                    </td>
 					                    <td>
-					                        <button class="btn btn-primary">修改</button>
-					                        <button class="btn btn-danger">删除</button>
+					                        <button class="btn btn-primary" onclick="window.location.href='${assets_path}/user/update.htm?id=${user.id}'">更改类型</button>
+					                        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-delete-url="${assets_path}/user/delete.htm?id=${user.id}">删除此用户</button>
 					                    </td>
 					                  </tr>
 					                  </#list>
@@ -99,29 +99,6 @@
 					              </table>
 					            </div>
 					            <div class="card-footer py-4">
-					              <nav aria-label="...">
-					                <ul class="pagination justify-content-end mb-0">
-					                  <li class="page-item disabled">
-					                    <a class="page-link" href="#" tabindex="-1">
-					                      <i class="fas fa-angle-left"></i>
-					                      <span class="sr-only">Previous</span>
-					                    </a>
-					                  </li>
-					                  <li class="page-item active">
-					                    <a class="page-link" href="#">1</a>
-					                  </li>
-					                  <li class="page-item">
-					                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-					                  </li>
-					                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-					                  <li class="page-item">
-					                    <a class="page-link" href="#">
-					                      <i class="fas fa-angle-right"></i>
-					                      <span class="sr-only">Next</span>
-					                    </a>
-					                  </li>
-					                </ul>
-					              </nav>
 					            </div>
 					          </div>
 					        </div>

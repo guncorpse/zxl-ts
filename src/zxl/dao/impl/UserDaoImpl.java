@@ -46,7 +46,7 @@ public class UserDaoImpl extends BaseDao implements IUserDao {
 		PreparedStatement state = null;
 		try {
 			StringBuilder sql = this.deleteSql(tableName);
-			sql.append(" AND ID = " + user.getId());
+			sql.append(" AND ID = '" + user.getId() + "'");
 			state = this.getPreparedStmt(sql.toString());
 			state.executeUpdate();
 		} catch (Exception e) {
@@ -125,6 +125,31 @@ public class UserDaoImpl extends BaseDao implements IUserDao {
 			users.add(user);
 		}
 		return users;
+	}
+
+	@Override
+	public User update(User user) throws Exception {
+		PreparedStatement state = null;
+		try {
+			StringBuilder sql = this.updateSQL(tableName, columns);
+			state = this.getPreparedStmt(sql.toString());
+			state.setString(1, user.getId());
+			state.setString(2, user.getName());
+			state.setString(3, user.getAccount());
+			state.setString(4, user.getPassword());
+			state.setString(5, user.getIsAdmin());
+			state.setString(6, user.getId());
+			state.executeUpdate();
+			return this.getById(user.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("用户修改错误:"+e.getMessage());
+		} finally {
+			if (state != null) {
+				state.getConnection().close();
+				state.close();
+			}
+		}
 	}
 
 }

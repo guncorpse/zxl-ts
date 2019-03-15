@@ -31,7 +31,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public User update(User user) throws Exception {
-		return null;
+		return userDao.update(user);
 	}
 
 	@Override

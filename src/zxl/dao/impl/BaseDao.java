@@ -9,7 +9,8 @@ public class BaseDao {
 	
 	private static final String url = "jdbc:mysql://localhost:3306/zxl_ts?useUnicode=true&characterEncoding=UTF8&useSSL=false";
 	private static final String username = "root";
-	private static final String password = "root";
+	private static final String password = "zaq1XSW@";
+	//private static final String password = "root";
 	
 	public PreparedStatement getPreparedStmt(String sql) throws Exception {
 		try {
@@ -49,6 +50,19 @@ public class BaseDao {
 		inserSql.append(" )");
 		valueSql.append(" );");
 		return inserSql.append(valueSql);
+	}
+	
+	public StringBuilder updateSQL(String tableName, String[] columns) {
+		StringBuilder updateSql = new StringBuilder(" UPDATE ");
+		updateSql.append(tableName).append(" SET ");
+		for (int i=0; i<columns.length; i++) {
+			if (i == columns.length - 1) {
+				updateSql.append(" ").append(columns[i]).append("=?");
+				continue;
+			}
+			updateSql.append(" ").append(columns[i]).append("=?").append(",");
+		}
+		return updateSql.append(" WHERE ID=? ");
 	}
 	
 	public StringBuilder deleteSql(String tableName) {

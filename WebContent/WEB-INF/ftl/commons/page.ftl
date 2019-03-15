@@ -16,7 +16,7 @@
       </a>
     </li>
     <li class="page-item active"><a class="page-link" href="#">${pagen}</a></li>
-    <#if pagen gt total/count - 1>
+    <#if pagen gt total/count>
     <li class="page-item disabled">
     <#else>
     <li class="page-item">

@@ -15,7 +15,7 @@ public class FavoriteDaoImpl extends BaseDao implements IFavoriteDao {
 
 	static final String tableName = "zxl_ts_favorite";
 
-	static final String[] columns = { "ID", "USER_ID", "BOOK_ID", "BOOK_TITLE", "BOOK_IMAGE", "SC_TIMESTAMP" };
+	static final String[] columns = { "ID", "USER_ID", "USER_NAME", "BOOK_ID", "BOOK_NAME", "BOOK_ALT", "BOOK_AUTHOR", "BOOK_IMAGE", "SC_TIMESTAMP" };
 
 	@Override
 	public Favorite save(Favorite favorite) throws Exception {
@@ -23,10 +23,13 @@ public class FavoriteDaoImpl extends BaseDao implements IFavoriteDao {
 		PreparedStatement state = this.getPreparedStmt(sql.toString());
 		state.setString(1, favorite.getId());
 		state.setString(2, favorite.getUserId());
-		state.setString(3, favorite.getBookId());
-		state.setString(4, favorite.getBookTitle());
-		state.setString(5, favorite.getBookImage());
-		state.setLong(6, favorite.getScTimestamp());
+		state.setString(3, favorite.getUserName());
+		state.setString(4, favorite.getBookId());
+		state.setString(5, favorite.getBookTitle());
+		state.setString(6, favorite.getBookAlt());
+		state.setString(7, favorite.getBookAuthor());
+		state.setString(8, favorite.getBookImage());
+		state.setLong(9, favorite.getScTimestamp());
 		state.executeUpdate();
 		return this.getById(favorite.getId());
 	}
@@ -55,7 +58,13 @@ public class FavoriteDaoImpl extends BaseDao implements IFavoriteDao {
 			sql.append(" AND BOOK_ID = '" + favorite.getBookId() + "'");
 		}
 		if (favorite.getBookTitle() != null && favorite.getBookTitle().trim().length() > 0) {
-			sql.append(" AND BOOK_TITLE = '" + favorite.getBookTitle() + "'");
+			sql.append(" AND BOOK_NAME = '" + favorite.getBookTitle() + "'");
+		}
+		if (favorite.getBookAlt() != null && favorite.getBookAlt().trim().length() > 0) {
+			sql.append(" AND BOOK_ALT = '" + favorite.getBookAlt() + "'");
+		}
+		if (favorite.getBookAuthor() != null && favorite.getBookAuthor().trim().length() > 0) {
+			sql.append(" AND BOOK_AUTHOR = '" + favorite.getBookAuthor() + "'");
 		}
 		if (favorite.getBookImage() != null && favorite.getBookImage().trim().length() > 0) {
 			sql.append(" AND BOOK_IMAGE = '" + favorite.getBookImage() + "'");
@@ -84,8 +93,11 @@ public class FavoriteDaoImpl extends BaseDao implements IFavoriteDao {
 			Favorite favorite = new Favorite();
 			favorite.setId(rs.getString("ID"));
 			favorite.setUserId(rs.getString("USER_ID"));
+			favorite.setUserName(rs.getString("USER_NAME"));
 			favorite.setBookId(rs.getString("BOOK_ID"));
-			favorite.setBookTitle(rs.getString("BOOK_TITLE"));
+			favorite.setBookTitle(rs.getString("BOOK_NAME"));
+			favorite.setBookAlt(rs.getString("BOOK_ALT"));
+			favorite.setBookAuthor(rs.getString("BOOK_AUTHOR"));
 			favorite.setBookImage(rs.getString("BOOK_IMAGE"));
 			favorite.setUserName(rs.getString("USER_NAME"));
 			favorite.setScTimestamp(rs.getLong("SC_TIMESTAMP"));
